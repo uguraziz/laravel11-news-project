@@ -20,7 +20,7 @@ class NewsFactory extends Factory
             'title' => $this->faker->sentence,
             'slug' => $this->faker->slug,
             'content' => $this->faker->paragraph,
-            'image' => $this->faker->imageUrl(),
+            'image_id' => $this->faker->numberBetween(1, 10),
             'category_id' => $this->faker->numberBetween(1, 10),
             'user_id' => $this->faker->numberBetween(1, 10),
             'is_active' => $this->faker->boolean()
