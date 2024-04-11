@@ -38,9 +38,15 @@ class TestController extends Controller
         // ->withTrashed()
         // ->get();
 
-        $haber = News::with('category', 'user')->get();
+        // $haber = News::with('category', 'user')->get();
 
-        dd($haber);
+        // reletaionship test
+        // $user = User::find(3);
+        // $news = $user->news()->first();
+        // $images = $news->images()->first();
+        // dd($images->image);
+
+        dd('Test started!');
     }
 
     public function create_user(): User
