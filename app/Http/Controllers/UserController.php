@@ -27,6 +27,23 @@ class UserController extends Controller
 
     }
 
+    public function get_user(Request $request)
+    {
+        $user = Auth::user();
+        if(!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found'
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User information successfully fetched',
+            'data' => $user
+        ]);
+    }
+
     public function login(UserLoginRequest $request)
     {
         $user = Auth::attempt($request->only('email', 'password'));
@@ -44,16 +61,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function logout(UserLoginRequest $request)
+    public function logout()
     {
-        $user = Auth::attempt($request->only('email', 'password'));
-        if(!$user) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Invalid login details'
-            ]);
-        }
-
         Auth::logout();
         return response()->json([
             'status' => true,
