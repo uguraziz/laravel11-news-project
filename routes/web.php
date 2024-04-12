@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MainCategoriesController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -48,4 +49,10 @@ Route::prefix('news')->withoutMiddleware(VerifyCsrfToken::class)
     Route::post('create', [NewsController::class, 'create_news']);
     Route::post('update/{id}', [NewsController::class, 'update_news']);
     Route::post('delete/{id}', [NewsController::class, 'delete_news']);
+});
+
+Route::prefix('images')->withoutMiddleware(VerifyCsrfToken::class)
+->group(function () {
+    Route::get('test/{id?}', [ImageController::class, 'test']);
+    Route::get('download', [ImageController::class, 'download'])->name('files.download');
 });
