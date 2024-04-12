@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug', 90)->unique();
             $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

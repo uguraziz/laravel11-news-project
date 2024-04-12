@@ -22,7 +22,6 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:categories,id',
             'main_categories_id' => 'nullable|integer|exists:main_categories,id',
             'name' => 'nullable|string|max:90',
             'slug' => 'nullable|string|max:90|unique:categories,slug',
@@ -36,9 +35,6 @@ class UpdateCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id.required' => 'Kategori kimliği gereklidir.',
-            'id.integer' => 'Kategori kimliği bir tamsayı olmalıdır.',
-            'id.exists' => 'Belirtilen kategori kimliği geçerli değil.',
             'main_categories_id.integer' => 'Ana kategori kimliği bir tamsayı olmalıdır.',
             'main_categories_id.exists' => 'Belirtilen ana kategori kimliği geçerli değil.',
             'name.string' => 'Kategori adı bir metin olmalıdır.',

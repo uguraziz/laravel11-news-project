@@ -11,9 +11,21 @@ use App\Http\Requests\DeleteCategoryRequest;
 
 class CategoriesController extends Controller
 {
-    public function get_categories()
+    public function get_categories(int $id = 0)
     {
-        $categories = Category::all();
+        if($id != 0) {
+            $categories = Category::find($id);
+        } else {
+            $categories = Category::all();
+        }
+
+        if(!$categories) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Categories not found'
+            ], 400);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Categories listed successfully',
@@ -39,9 +51,10 @@ class CategoriesController extends Controller
         ]);
     }
 
-    public function update_category(UpdateCategoryRequest $request)
+    public function update_category(UpdateCategoryRequest $request, int $id)
     {
-        $category = Category::find($request->id);
+        $category = Category::findOrFail($id);
+
         $category->main_categories_id = $request->main_categories_id ?? $category->main_categories_id;
         $category->name = $request->name ?? $category->name;
         $category->slug = Str::slug($request->name) ?? $category->slug;
@@ -57,15 +70,15 @@ class CategoriesController extends Controller
         ]);
     }
 
-    public function delete_category(DeleteCategoryRequest $request)
+    public function delete_category(int $id)
     {
-        $category = Category::find($request->id);
+        $category = Category::find($id);
 
         if (!$category) {
             return response()->json([
                 'status' => false,
                 'message' => 'Category not found'
-            ]);
+            ], 400);
         }
 
         $category->delete();
@@ -74,15 +87,4 @@ class CategoriesController extends Controller
             'message' => 'Category deleted successfully'
         ]);
     }
-
-    public function get_category(Request $request)
-    {
-        $category = Category::find($request->id);
-        return response()->json([
-            'status' => true,
-            'message' => 'Category listed successfully',
-            'data' => $category
-        ]);
-    }
-
 }
